@@ -1,0 +1,14 @@
+name: setup-togomak
+description: Setup Togomak CLI on GitHub Actions runners
+author: Srevin Saju
+inputs:
+  version:
+    description: Version of Togomak CLI to install
+    required: false
+    default: 2.0.0-alpha.15
+runs:
+  using: node20
+  main: dist/index.js
+branding:
+  icon: 'terminal'
+  color: 'blue'

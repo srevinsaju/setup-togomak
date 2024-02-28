@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        version: [2.0.0-alpha.15]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup togomak
+      uses: ./
+      with:
+        version: ${{ matrix.version }}
+
+    - name: Capture togomak version installed
+      run: |
+        TOGOMAK_VERSION=$( togomak --version )
+        export TOGOMAK_VERSION
+        echo 'TOGOMAK_VERSION_INSTALLED<<EOF' >> $GITHUB_ENV
+        togomak --version >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+
+    - name: Verify
+      shell: python
+      env:
+        TOGOMAK_VERSION_EXPECTED: ${{ matrix.version }}
+      run: |
+        import sys, os
+        sys.exit(
+            int(not os.environ["TOGOMAK_VERSION_EXPECTED"] in os.environ["TOGOMAK_VERSION_INSTALLED"])
+        )
