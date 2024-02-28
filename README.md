@@ -6,7 +6,7 @@ This GitHub Action installs `togomak` into `$PATH`. For more information, refer 
 
 ## Usage
 
-Setup the `gh` CLI:
+Setup the `togomak` CLI:
 
 ```yaml
 steps:
