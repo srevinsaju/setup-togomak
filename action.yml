@@ -5,7 +5,7 @@ inputs:
   version:
     description: Version of Togomak CLI to install
     required: false
-    default: 2.0.0-alpha.15
+    default: 2.0.0-alpha.16
 runs:
   using: node20
   main: dist/index.js
